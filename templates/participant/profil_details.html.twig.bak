@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+ {% block title %} Profil de {{ profil.username }}{% endblock %}
+
+{% block title_header %} {% endblock %}
+
+{% block body %}
+
+    <h1>{{ profil.username }}</h1>
+
+    <ul>
+        <li> Prénom : {{ profil.prenom }}  </li>
+        <li> Nom : {{ profil.nom }}  </li>
+
+        <h2> Contact </h2>
+        <li> Téléphone : {{ profil.telephone }}  </li>
+        <li> Email : {{ profil.email }} </li>
+        <li> Nom du site : {{ profil.site.nom }} </li>
+
+    </ul>
+    {% if app.user.username in profil.username %}
+        <a href="{{ path("user_modify") }}" class="btn btn-light" > Modifier Profil </a>
+       {% endif %}
+    <a href="{{ path('home') }}" class="btn btn-light" > Retour </a>
+
+
+
+{% endblock %}
+

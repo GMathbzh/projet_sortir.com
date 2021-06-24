@@ -1,0 +1,172 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div align="right">
+        <div class="card border-dark mb-3" style="width: 15rem">
+            <div class="card-body">
+                <p class="card-text d-flex justify-content-center ">
+                <div><b>Date du jour:</b> {{ "now"|date("d/m/Y") }}</div>
+
+                <div><b>Hello </b> <b><a
+                                href="{{ url('detail_profil', { 'id' : app.user.id }) }}"> {{ app.user.username }} </a>!</b>
+                </div>
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="jumbotron mt-2">
+    <div class="table-responsive">
+        <table class="table-align-middle table-striped table-bordered" style="width:100%">
+            <div class="content container ">
+                <div class="row">
+                    <div class="col-md-6 justify-content-between">
+                        {{ form_start(sortieFiltreForm) }}
+
+                        <div class="form-group row">
+
+                            <div class="col-md-6">
+                                {{ form_row(sortieFiltreForm.nom) }}
+                                {{ form_errors(sortieFiltreForm.nom) }}
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-6">
+                                {{ form_row(sortieFiltreForm.site) }}
+                                {{ form_errors(sortieFiltreForm.site) }}
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+
+                            <div class="col-md-6">
+                                {{ form_row(sortieFiltreForm.debut, {'id': 'picker1'}) }}
+                                {{ form_errors(sortieFiltreForm.debut) }}
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-6">
+                                {{ form_row(sortieFiltreForm.fin, {'id': 'picker2'}) }}
+                                {{ form_errors(sortieFiltreForm.fin) }}
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 justify-content-between">
+                        <div class="form-group row">
+
+                            <div class="col-md-6">
+                                {{ form_row(sortieFiltreForm.organisateur) }}
+                                {{ form_errors(sortieFiltreForm.organisateur) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+
+                            <div class="col-md-6">
+                                {{ form_row(sortieFiltreForm.inscrit) }}
+                                {{ form_errors(sortieFiltreForm.inscrit) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+
+                            <div class="col-md-6">
+                                {{ form_row(sortieFiltreForm.non_inscrit) }}
+                                {{ form_errors(sortieFiltreForm.non_inscrit) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+
+                            <div class="col-md-6">
+                                {{ form_row(sortieFiltreForm.passee) }}
+                                {{ form_errors(sortieFiltreForm.passee) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div container my-3 bg-light>
+                        <div class="col-md-12 text-center">
+                            {{ form_row(sortieFiltreForm.valide) }}
+                        </div>
+                    </div>
+                </div>
+
+
+                {{ form_end(sortieFiltreForm) }}
+            </div>
+
+            <h1 class="text-center display-4 lead"><b>Liste des sorties</b></h1>
+
+            <br>
+            <thead class="thead-light text-center">
+            <tr>
+                <th scope="col">Nom de la sortie</th>
+                <th scope="col">Date de la sortie</th>
+                <th scope="col">Clôture</th>
+                <th scope="col">Inscrits/places</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Inscrit</th>
+                <th scope="col">Organisateur</th>
+                <th scope="col">Action</th>
+
+            </tr>
+            </thead>
+            {% for sortieList in sortie %}
+                <tbody>
+                <tr class="text-center">
+
+                    <td><b>{{ sortieList.nom }}</b></td>
+                    <td>{{ sortieList.dateheuredebut|date('d-m-Y à H:i') }}</td>
+                    <td>{{ sortieList.datelimiteinscription|date('d-m-Y') }}</td>
+                    <td>{{ sortieList.users|length }} / {{ sortieList.nbinscriptionsmax }}</td>
+                    <td>{{ sortieList.etat.libelle }}</td>
+                    <td> {% if app.user in sortieList.users %}
+                            X {% endif %} </td>
+                    <td>
+                        <a href="{{ url('detail_profil', { 'id' : sortieList.organisateur.id }) }}"> {{ sortieList.organisateur.username }}</a>
+                    </td>
+                    <td>
+                        <div container my-3 bg-light>
+
+                            <div class="col-md-12">
+                                <a href="{{ url('detail_sortie', { 'id' : sortieList.id }) }}" class="btn btn-light">Afficher</a>
+                                &nbsp
+
+                                {% if app.user in sortieList.users and sortieList.etat.libelle != ('En création') and sortieList.etat.libelle != ('Clôturée') and sortieList.etat.libelle != ('Annulée') %}
+                                    <a href="{{ url('sortie_cancel_register', { 'id' : sortieList.id }) }}"
+                                       class="btn btn-light"> Se désister </a>&nbsp
+
+                                {% elseif sortieList.users|length < sortieList.nbinscriptionsmax and sortieList.etat.libelle != ('En création') and sortieList.etat.libelle != ('Clôturée') and sortieList.etat.libelle != ('Annulée') %}
+                                    <a href="{{ url('sortie_register', { 'id' : sortieList.id}) }}"
+                                       class="btn btn-light">S'inscrire</a>
+                                    &nbsp
+                                {% endif %}
+                                {% if app.user.username in sortieList.organisateur.username and sortieList.etat.libelle != ('Annnulée') and sortieList.etat.libelle != ('Clôturée') %}
+                                    <a href="{{ url('sortie_modify', { 'id' : sortieList.id }) }}"
+                                       class="btn btn-light"> Modifier </a>&nbsp
+                                {% endif %}
+
+                                {% if app.user.username in sortieList.organisateur.username and sortieList.etat.libelle != ('Clôturée') and sortieList.etat.libelle != ('Annulée') %}
+                                    <a href="{{ url('sortie_cancel', { 'id' : sortieList.id }) }}"
+                                       class="btn btn-light"> Annuler </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+    <div>
+        <a href="{{ url('sortie_create') }}" class="btn btn-light">
+            Créer une sortie </a></div>
+{% endblock %}

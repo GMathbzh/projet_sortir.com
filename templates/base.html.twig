@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Sortir.com{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,400;0,900;1,200;1,400;1,900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
+          rel="stylesheet"/>
+
+
+    <link rel="icon" href="{{ asset('img/favicon.png') }}">
+    <link rel="stylesheet" href="{{ asset('style.css') }}">
+
+    {% block stylesheets %}
+        {# {{ encore_entry_link_tags('app') }} #}
+    {% endblock %}
+
+    {% block javascripts %}
+        {# {{ encore_entry_script_tags('app') }} #}
+    {% endblock %}
+</head>
+<body>
+<div class="Page container">
+    <header class="header">
+        <nav class="Navbar Page_Nav d-flex">
+            <div class="mr-auto p-2">
+                <a class="navbar-brand" href="{{ path('home') }}">
+                    <img src="{{ asset('image/SortirLogo.png') }}" width="300" alt="" class="d-inline-block align-top">
+                </a>
+            </div>
+            <div class="p-2">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if is_granted ('ROLE_ADMIN') %}
+                        <div class="btn btn-light">
+                            <a href="{{ path('ville') }}">Villes</a>
+                        </div>
+                        <div class="btn btn-light">
+                            <a href="{{ path('site') }}">Sites</a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                {% if app.user == null %}
+                    <div class="btn btn-light">
+                        <a href="{{ path('app_login') }}">Se connecter</a>
+                    </div>
+                {% endif %}
+                {% if app.user == null %}
+                    <div class="btn btn-light">
+                        <a href="{{ path('user_create') }}">Inscription</a>
+                    </div>
+                {% endif %}
+                {% if app.user %}
+                    <div class="btn btn-light">
+                        <a href="{{ path('home') }}">Accueil</a>
+                    </div>
+                {% endif %}
+                {% if app.user %}
+                    <div class="btn btn-light">
+                        <a href="{{ url('detail_profil', { 'id' : app.user.id }) }}">Mon profil</a>
+                    </div>
+                {% endif %}
+                {% if app.user %}
+                    <div class="btn btn-light">
+                        <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                    </div>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <div class="Page_Contents">
+        <main class="Page_Main">
+            {% for type, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash flash-{{ type }}">{{ message }}</div>
+                {% endfor %}
+            {% endfor %}
+
+            {% block main %}
+            {% endblock %}
+        </main>
+        <aside class="Page_Aside">
+            {% block aside %}
+            {% endblock %}
+        </aside>
+
+        {% block body %}
+
+        {% endblock %}
+        <footer class="Footer Page_Footer">
+
+            <p class="Copyrights">
+                &copy; Projet Symfony 2021 - Aurore, Alexis L, Alexis D et Mathieu
+            </p>
+
+
+        </footer>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script>
+    $('#picker1').datetimepicker({
+        timepicker: true,
+        datepicker: true,
+        format: 'Y-m-d H:i:s',
+        hours12: false,
+        step: 30,
+    })
+
+    $('#picker2').datetimepicker({
+        timepicker: true,
+        datepicker: true,
+        format: 'Y-m-d H:i:s',
+        hours12: false,
+        step: 30,
+    })
+</script>
+</body>
+</html>

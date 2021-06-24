@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Supprimer une sortie{% endblock %}
+
+{% block main %}
+
+    <h1 class="text-center display-4 lead"> Supprimer une sortie </h1>
+    <h3 class="text-center display-4 lead">"{{ sortie.nom }}"</h3>
+    <div class="col-md-4">
+        <div class="card" style="width: 30rem;">
+            <div class="card-body">
+                <p class="card-text"> Nom de la sortie: <b>{{ sortie.nom }}</b></p>
+                <p class="card-text">  Date et heure de la sortie: <b>{{ sortie.dateheuredebut|date('d-m-Y à H:i') }}</b></p>
+                <p class="card-text">  Ville organisatrice: <b>{{ sortie.lieu.ville.nom }}</b></p>
+                <p class="card-text"> Lieu: <b>{{ sortie.lieu.nom }}</b></p>
+            </div>
+        </div>
+    </div>
+    {{ form_start(sortieForm) }}
+    {{ form_end(sortieForm) }}
+
+
+{% endblock %}

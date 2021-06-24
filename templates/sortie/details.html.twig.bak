@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <h1>Afficher une sortie</h1>
+    <br>
+    <div class="content container ">
+        <div class="row justify-content-md-center">
+            <div class="col-md-8 row">
+                <div class="col-md-8">
+                    <p>
+                        Nom de la sortie: <b>{{ sortie.nom }}</b>
+                    </p>
+                    <p>
+                        Date et heure de la sortie: <b>{{ sortie.dateheuredebut|date('d-m-Y à H:i') }}</b>
+                    </p>
+                    <p>
+                        Date limite d'inscription: <b>{{ sortie.datelimiteinscription|date('d-m-Y') }}</b>
+                    </p>
+                    <p> Nombre de places: <b>{{ sortie.nbinscriptionsmax }}</b></p>
+                    <p> Durée: <b>{{ sortie.duree }}</b></p>
+                    <p> Description et info: <b>{{ sortie.infossortie }}</b></p>
+
+                </div>
+                <div class="col-md-4">
+                    <p> Ville organisatrice: <b>{{ sortie.lieu.ville.nom }}</b></p>
+
+                    <p> Lieu: <b>{{ sortie.lieu.nom }}</b></p>
+                    <p> Rue: <b>{{ sortie.lieu.rue }}</b></p>
+                    <p> Code postal: <b>{{ sortie.lieu.ville.codepostal }}</b></p>
+                    <p> Latitude: <b>{{ sortie.lieu.latitude }}</b></p>
+                    <p> Longitude: <b>{{ sortie.lieu.longitude }}</b></p>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="row justify-content-md-center">
+
+                <br>
+                <br>
+                <table class="table">
+                    <h1>Liste des participants inscrits:</h1>
+
+                    <thead>
+                    <tr>
+                        <th scope="col">Pseudo</th>
+                        <th scope="col">Prénom</th>
+                        <th scope="col">Nom</th>
+                    </tr>
+                    </thead>
+                    {% for user in sortie.getUsers() %}
+                    <tbody>
+                    <tr>
+
+                        <td> <a href="{{ url('detail_profil', { 'id' : user.id }) }}">{{ user.username }}</a></td>
+                        <td>{{ user.prenom }}</td>
+                        <td>{{ user.nom }}</td>
+                    </tr>
+
+                    </tbody>
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

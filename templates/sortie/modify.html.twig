@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <h1>Modifier ma sortie</h1>
+    <br>
+    <br>
+    <div class="content container ">
+        <div class="row">
+            <div class="col-md-6 justify-content-between">
+                {{ form_start(sortieForm) }}
+
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        {{ form_label(sortieForm.nom) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_widget(sortieForm.nom) }}
+                        {{ form_errors(sortieForm.nom) }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        {{ form_label(sortieForm.dateheuredebut) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_widget(sortieForm.dateheuredebut) }}
+                        {{ form_errors(sortieForm.dateheuredebut) }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        {{ form_label(sortieForm.datelimiteinscription) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_widget(sortieForm.datelimiteinscription) }}
+                        {{ form_errors(sortieForm.datelimiteinscription) }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        {{ form_label(sortieForm.duree) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_widget(sortieForm.duree) }}
+                        {{ form_errors(sortieForm.duree) }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        {{ form_label(sortieForm.nbinscriptionsmax) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_widget(sortieForm.nbinscriptionsmax) }}
+                        {{ form_errors(sortieForm.nbinscriptionsmax) }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        {{ form_label(sortieForm.infossortie) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_widget(sortieForm.infossortie) }}
+                        {{ form_errors(sortieForm.infossortie) }}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6 justify-content-between">
+
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        {{ form_label(sortieForm.lieu) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_widget(sortieForm.lieu) }}
+                        {{ form_errors(sortieForm.lieu) }}
+                    </div>
+                    <div class="col-md-2">
+                        <label name="lieu_sortie">
+                            <a href="{{ path('lieu_create') }}">
+                                <img src="{{ asset('image/add.png') }}" alt="icone_add" class="icone_add">
+                            </a>
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_label(sortieForm.ville) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_widget(sortieForm.ville) }}
+                        {{ form_errors(sortieForm.ville) }}
+                    </div>
+                    <br>
+
+                    <div class="col-md-4">
+                        {{ form_label(sortieForm.latitude) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_widget(sortieForm.latitude) }}
+                        {{ form_errors(sortieForm.latitude) }}
+                    </div>
+
+
+                    <div class="col-md-4">
+                        {{ form_label(sortieForm.longitude) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_widget(sortieForm.longitude) }}
+                        {{ form_errors(sortieForm.longitude) }}
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <br>
+        <div container my-3 bg-light>
+            <div class="col-md-12 text-center">
+                {{ form_widget(sortieForm.enregistrer) }}
+                {{ form_widget(sortieForm.publier) }}
+                <input type="submit" class="btn btn-outline-primary mr-1" value="Supprimer la sortie">
+                {{ form_end(sortieForm) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

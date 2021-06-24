@@ -1,0 +1,15 @@
+{% extends 'document.html.twig' %}
+
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block body %}
+
+    <h1>{{ site.nom }}</h1>
+       <ul>
+        {% for profil in site.profil %}
+            <li>
+                <a href="{{ url('site_read', { 'id' : site.id }) }}">{{ site.nom }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

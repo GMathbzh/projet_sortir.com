@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer les sites{% endblock %}
+
+{% block body %}
+    <div class="Page container">
+        <h1 class="text-center display-4 lead"><b>Gérer les sites</b></h1>
+{{ form_start(form_site) }}
+        {{ form_end(form_site) }}
+    </div>
+{% endblock %}
