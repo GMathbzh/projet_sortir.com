@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class AccountController extends AbstractController
+{
+
+    public function accountInfo()
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+    }
+
+    public function resetPassword()
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+    }
+}

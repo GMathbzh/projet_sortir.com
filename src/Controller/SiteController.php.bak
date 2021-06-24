@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Controller;
+
+
+
+use App\Repository\SiteRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class SiteController extends AbstractController
+{
+    #[Route('/site/{id}', name: 'site_read', requirements: [ 'id' => '\d+' ])]
+    public function site(int $id, SiteRepository $siteRepository): Response
+    {
+        return $this->render('site/read.html.twig', [
+            'site'        => $siteRepository->findOneWithParticipant($id),
+        ]);
+    }
+
+    #[Route('/site', name: 'list_site')]
+    public function listSite(int $id, SiteRepository $siteRepository): Response
+    {
+        return $this->render('site/read.html.twig', [
+            'site'        => $siteRepository->findAll(),
+        ]);
+    }
+}

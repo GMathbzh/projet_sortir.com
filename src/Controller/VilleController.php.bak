@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\Sortie;
+use App\Entity\Ville;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class VilleController extends AbstractController
+{
+    #[Route('/ville/detail/{id}', name: 'ville_detail', requirements: [ 'id' => '\d+' ])]
+    public function details(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $repository = $entityManager->getRepository(Ville::class);
+        $ville      = $repository->findOneBy(['id' => $id]);
+
+
+        return $this->render('sortie/details.html.twig', [
+            'ville' => $ville,
+        ]);
+    }
+}
