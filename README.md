@@ -4,11 +4,11 @@ Projet de groupe effectué dans le cadre de la formation Développeur Web et Web
 
 Techno:
 
-PHP
-  Composer
-  Symfony
-    Twig
-    Doctrine
+- PHP.
+- Composer.
+- Symfony.
+- Twig.
+- Doctrine.
 
 Sujet:
 
